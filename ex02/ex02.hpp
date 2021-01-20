@@ -33,18 +33,16 @@ T templateMin(T* array, int size)
     T tmp = array[0];
 
     for (int ctr = 1; ctr < size; ctr += 1)
-        if (tmp > array[ctr])
-            tmp = array[ctr];
+        tmp = min<T>(tmp, array[ctr]);
     return (tmp);
 }
 
-int templateMin(int* array, int size)
+int nonTemplateMin(int* array, int size)
 {
     int tmp = array[0];
 
     for (int ctr = 1; ctr < size; ctr += 1)
-        if (tmp > array[ctr])
-            tmp = array[ctr];
+        tmp = min(tmp, array[ctr]);
     return (tmp);
 }
 
