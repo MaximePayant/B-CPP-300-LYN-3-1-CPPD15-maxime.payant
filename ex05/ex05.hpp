@@ -22,9 +22,11 @@ class array
         array();
         array(std::size_t n);
         array(const array<T>& copy);
+        ~array();
 
         void dump() const;
         T& operator[](std::size_t index);
+        const T& operator[](std::size_t index) const;
         array& operator=(const array<T>& other);
 
         std::size_t size() const { return (_size); }
@@ -59,12 +61,15 @@ _size(copy._size)
 }
 
 template<typename T>
+array<T>::~array()
+{
+    delete []_array;
+}
+
+template<typename T>
 T& array<T>::operator[](std::size_t index)
 {
     if (_size == 0 || index > _size - 1) {
-        if (std::is_const<decltype(*this)>::value)
-            throw std::exception();
-
         T *newArray = new T[index + 1];
         std::size_t newCtr = 0;
 
@@ -76,6 +81,14 @@ T& array<T>::operator[](std::size_t index)
         _array = newArray;
         _size = index + 1;
     }
+    return (_array[index]);
+}
+
+template<typename T>
+const T& array<T>::operator[](std::size_t index) const
+{
+    if (_size == 0 || index > _size - 1)
+        throw std::exception();
     return (_array[index]);
 }
 
